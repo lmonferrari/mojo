@@ -49,11 +49,28 @@ fn pow(base: Int, exp: Int = 2) -> Int:
     return base**exp
 
 
+# Funções com parâmetros variáveis
+fn add(x: Int, y: Int) -> Int:
+    return x + y
+
+
+fn add_inout(inout x: Int, inout y: Int) -> Int:
+    x = 10
+    y = 20
+    return x + y
+
+
+#  fn add_borrowed(borrowed x: Int, borrowed y: Int) -> Int:
+#     x = 25
+#     y = 35
+#     return x + y
+
+
 # A palavra reservada fn é para funções compiladas
 # que fazem uso do MLIR(framework) para compilar o código
 # para o LLVM IR
 # A palavra reservada def é para funções interpretadas
-fn main():
+fn main() raises:
     print("Hello, world!")
     print(x + y)
 
@@ -80,9 +97,50 @@ fn main():
     print("pow 2**3:", pow(2, 3))
     print("pow: 2**2:", pow(2))
 
+    # struct
     let mycoffe: MyCoffe
     mycoffe = MyCoffe("milk", "coffee")
     mycoffe.dump()
+
+    # parâmetros variáveis
+    var x: Int = 3
+    var y: Int = 2
+
+    print("x:", x)
+    print("y:", y)
+    print("add:", add(x, y))
+    # inout é para passar a referência da variável
+    # e não uma cópia
+    # com isso é possível alterar o valor da variável
+    print("add_inout:", add_inout(x, y))
+    print("x:", x)
+    print("y:", y)
+
+    # borrowed é para passar a referência da variável
+    # e não uma cópia
+    # com isso não é possível alterar o valor da variável
+
+    # a funcão esta comentada pois não é possível executar
+    # pois não é possível alterar o valor da variável
+
+    # print("add_borrowed:", add_borrowed(x, y))
+
+    # funções de string
+    # contando quantos caracteres tem na string
+    # a função count é uma função compilada
+    let variavelString: String = "Hello, world!"
+    print(String.count(variavelString, "l"))
+
+    let a = String.split(variavelString, " ")
+
+    for i in range(a.__len__()):
+        print(a.__getitem__(i))
+
+    let troca: String = String.replace(variavelString, "world", "mundo")
+    print(troca)
+
+    let upperTroca: String = String.toupper(troca)
+    print(upperTroca)
 
 
 # Estruturas otimizadas para o LLVM IR
